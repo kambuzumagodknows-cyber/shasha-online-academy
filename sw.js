@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v11-admin-menus-20260728';
+const CACHE = 'shasha-v12-operations-centre-20260728';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js',
@@ -6,7 +6,8 @@ const ASSETS = [
   './teacher.html','./teacher-app.js','./teacher-marking.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
-  './scheduling.html','./scheduling.css','./scheduling.js','./404.html',
+  './scheduling.html','./scheduling.css','./scheduling.js',
+  './operations.html','./operations.css','./operations.js','./404.html',
   './assets/logo-mark.svg','./assets/favicon.svg','./assets/hero-learning.webp',
   './assets/student-dashboard.webp','./assets/teacher-dashboard.webp','./assets/social-preview.jpg'
 ];
