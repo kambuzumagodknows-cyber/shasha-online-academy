@@ -11,5 +11,7 @@ window.SHASHA_CONFIG = {
   ],
   emailAddress: "",
   country: "Zimbabwe",
-  currency: "USD"
+  currency: "USD",
+  supabaseUrl: "https://wchctuyglpafeokvemzl.supabase.co",
+  supabasePublishableKey: "sb_publishable_R-VlWyQNzLLwMKx9VFsk1Q_M0yxvK3I"
 };
