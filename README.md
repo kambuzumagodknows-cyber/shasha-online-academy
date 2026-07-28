@@ -1,28 +1,48 @@
-# ShaSha Online Academy
+# ShaSha Online Academy — Interactive Website Prototype
 
-A polished static MVP for ShaSha Online Academy, designed for free deployment through GitHub Pages.
+A responsive, installable static website and four interactive portal prototypes for:
 
-## Included
+- Students
+- Teachers
+- Parents
+- Academy administrators
 
-- Responsive public landing page
-- Student portal visual demo
-- Teacher portal visual demo
-- Portal switcher for Student, Teacher, Parent and Admin roles
-- Registration-interest form stored locally in the browser
-- Mobile navigation, animations and interactive demo modal
+## Run locally
 
-## Deploy with GitHub Pages
+Open a terminal in this folder and run:
 
-1. Open repository **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/(root)**.
-4. Click **Save**.
+```bash
+python -m http.server 8000
+```
 
-## Next build phase
+Then visit `http://localhost:8000`.
 
-- Real login and role-based access
-- Student, parent, teacher and admin databases
-- Automatic timetable engine
-- Assignments, results and attendance
-- WhatsApp notifications
-- Payments and teacher payroll
+## Publish on GitHub Pages
+
+1. Upload every file and the complete `assets` folder to the repository root.
+2. Open **Settings → Pages**.
+3. Choose **Deploy from a branch**.
+4. Select `main` and `/(root)`.
+5. Save.
+
+## Contact details already configured
+
+The website is ready with both numbers:
+
+- WhatsApp and calls: `0719 883 520` (`263719883520`)
+- WhatsApp and calls: `0782 224 754` (`263782224754`)
+
+After a learner completes the enrolment form, they can choose either WhatsApp number. Both numbers also appear as click-to-call links in the footer.
+
+## Important production note
+
+This is a strong front-end prototype. The next phase must connect:
+
+- secure authentication and role permissions
+- a cloud database
+- live class provider links
+- timetable allocation logic
+- assignment uploads and marking
+- payment processing and receipts
+- WhatsApp/email notifications
+- admin reporting and audit logs

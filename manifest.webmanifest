@@ -1,0 +1,12 @@
+{
+  "name": "ShaSha Online Academy",
+  "short_name": "ShaSha",
+  "description": "Structured online lessons and connected learning portals for Zimbabwean learners.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a2a76",
+  "icons": [
+    {"src":"assets/logo-mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
