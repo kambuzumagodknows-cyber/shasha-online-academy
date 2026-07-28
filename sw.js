@@ -1,9 +1,9 @@
-const CACHE = 'shasha-v8-learning-records-20260728';
+const CACHE = 'shasha-v9-parent-submissions-20260728';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
-  './portal.css','./portal.js','./parent.html',
+  './portal.css','./portal.js','./parent.html','./parent-app.js',
   './student.html','./student-live.css','./student-app.js',
-  './teacher.html','./teacher-app.js',
+  './teacher.html','./teacher-app.js','./teacher-marking.js',
   './admin.html','./admin.css','./admin-app.js','./supabase-client.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
   './scheduling.html','./scheduling.css','./scheduling.js','./404.html',
