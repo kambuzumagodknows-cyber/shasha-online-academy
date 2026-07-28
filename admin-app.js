@@ -33,7 +33,7 @@
   }
   function render(){
     const q=$('#search-apps').value.trim().toLowerCase(),status=$('#status-filter').value;
-    const rows=apps.filter(a=>(!status||a.status===status)&&(!q||[a.guardian_name,a.learner_name,a.guardian_email,a.phone,a.academic_level,...(a.subjects||[])].join(' ').toLowerCase().includes(q)));
+    const rows=apps.filter(a=>(!status||a.status===status)&&(!q||[a.guardian_name,a.learner_name,a.guardian_email,a.learner_email,a.phone,a.academic_level,...(a.subjects||[])].join(' ').toLowerCase().includes(q)));
     $('#stat-all').textContent=apps.length;$('#stat-new').textContent=apps.filter(a=>a.status==='new').length;$('#stat-review').textContent=apps.filter(a=>a.status==='under_review').length;$('#stat-approved').textContent=apps.filter(a=>['approved','timetable_pending','active'].includes(a.status)).length;
     $('#apps-body').innerHTML=rows.length?rows.map(a=>`<tr><td class="person"><strong>${esc(a.learner_name)}</strong><small>Guardian: ${esc(a.guardian_name)}</small></td><td>${esc(a.guardian_email)}<br><small>${esc(a.phone)}</small></td><td>${esc(a.academic_level)}<br><small>${esc((a.subjects||[]).join(', '))}</small></td><td><span class="badge ${esc(a.status)}">${esc(a.status.replaceAll('_',' '))}</span></td><td>${date(a.created_at)}</td><td><button class="secondary" data-review="${a.id}">Review</button></td></tr>`).join(''):'<tr><td colspan="6" class="loading">No matching applications.</td></tr>';
     $$('[data-review]').forEach(b=>b.onclick=()=>openReview(b.dataset.review));
@@ -42,9 +42,21 @@
     selected=apps.find(a=>a.id===id);if(!selected)return;
     $('#review-name').textContent=selected.learner_name;$('#review-reference').textContent=`Reference ${selected.id.slice(0,8).toUpperCase()}`;
     $('#review-details').innerHTML=[['Guardian',selected.guardian_name],['Guardian email',selected.guardian_email],['Phone',selected.phone],['Academic level',selected.academic_level],['Subjects',(selected.subjects||[]).join(', ')],['Device',selected.learning_device],['Learner email',selected.learner_email||'Not provided'],['Notes',selected.notes||'None']].map(([k,v])=>`<div class="detail"><small>${esc(k)}</small><strong>${esc(v)}</strong></div>`).join('');
-    const f=$('#review-form');f.status.value=selected.status;f.note.value=selected.admin_notes||'';clear($('#review-message'));$('#review-drawer').classList.add('open');
+    const f=$('#review-form');f.status.value=selected.status;f.learnerEmail.value=selected.learner_email||'';f.note.value=selected.admin_notes||'';clear($('#review-message'));$('#review-drawer').classList.add('open');
   }
   $$('[data-close-review]').forEach(b=>b.onclick=()=>$('#review-drawer').classList.remove('open'));
-  $('#review-form').onsubmit=async e=>{e.preventDefault();if(!selected)return;const f=new FormData(e.currentTarget),{data,error}=await db.rpc('review_application',{application_id:selected.id,next_status:f.get('status'),note:f.get('note')||null});if(error)return message($('#review-message'),error.message,true);message($('#review-message'),'Decision saved successfully.');selected=data;await load();setTimeout(()=>$('#review-drawer').classList.remove('open'),700)};
+  $('#review-form').onsubmit=async e=>{
+    e.preventDefault();if(!selected)return;
+    const f=new FormData(e.currentTarget),learnerEmail=String(f.get('learnerEmail')||'').trim().toLowerCase()||null;
+    const updated=await db.from('applications').update({learner_email:learnerEmail}).eq('id',selected.id).select().single();
+    if(updated.error)return message($('#review-message'),updated.error.message,true);
+    if(learnerEmail){
+      const learnerUpdate=await db.from('learners').update({email:learnerEmail}).eq('application_id',selected.id);
+      if(learnerUpdate.error)return message($('#review-message'),learnerUpdate.error.message,true);
+    }
+    const {data,error}=await db.rpc('review_application',{application_id:selected.id,next_status:f.get('status'),note:f.get('note')||null});
+    if(error)return message($('#review-message'),error.message,true);
+    message($('#review-message'),'Decision and learner login email saved successfully.');selected=data;await load();setTimeout(()=>$('#review-drawer').classList.remove('open'),850);
+  };
   db.auth.onAuthStateChange(()=>setTimeout(boot,0));boot();
 })();
