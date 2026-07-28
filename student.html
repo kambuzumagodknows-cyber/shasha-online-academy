@@ -13,8 +13,8 @@
     <div class="auth-card">
       <a class="brand" href="index.html"><img src="assets/logo-mark.svg" alt=""><span><strong>ShaSha</strong> Online Academy</span></a>
       <span class="eyebrow">STUDENT PORTAL</span>
-      <h1>Access your real timetable.</h1>
-      <p>Use the same learner email that was approved during enrolment.</p>
+      <h1>Your learning, in one place.</h1>
+      <p>Use the learner email approved by ShaSha administration.</p>
       <div class="tabs"><button class="active" data-auth-tab="login">Sign in</button><button data-auth-tab="signup">Create account</button></div>
       <form id="login-form" class="auth-form"><label>Email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button>Sign in</button></form>
       <form id="signup-form" class="auth-form hidden"><label>Full name<input name="fullName" required></label><label>Approved learner email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button>Create student account</button><small>You may need to confirm your email before signing in.</small></form>
@@ -25,11 +25,14 @@
   <section id="portal-view" class="hidden">
     <header class="topbar"><a class="brand" href="index.html"><img src="assets/logo-mark.svg" alt=""><span><strong>ShaSha</strong> Student</span></a><div class="top-actions"><span id="identity"></span><button id="refresh">Refresh</button><button id="sign-out">Sign out</button></div></header>
     <main>
-      <section id="claim-panel" class="claim hidden"><h2>Link your approved learner record</h2><p>Your account is signed in, but it has not yet been linked. The email must exactly match the learner email entered and approved by the academy.</p><button id="claim-account">Link my learner record</button><div id="claim-message" class="notice hidden"></div></section>
+      <section id="claim-panel" class="claim hidden"><h2>Link your approved learner record</h2><p>Your account is signed in, but it has not yet been linked. The email must exactly match the learner email approved by the academy.</p><button id="claim-account">Link my learner record</button><div id="claim-message" class="notice hidden"></div></section>
       <section id="dashboard" class="hidden">
         <div class="hero"><div><span class="eyebrow" id="today"></span><h1>Welcome, <span id="learner-name"></span>.</h1><p id="learner-summary"></p></div><div class="hero-icon">🎓</div></div>
-        <section class="stats"><article><small>Academic level</small><strong id="level"></strong></article><article><small>Subjects</small><strong id="subject-count">0</strong></article><article><small>Weekly sessions</small><strong id="class-count">0</strong></article><article><small>Account status</small><strong id="status"></strong></article></section>
+        <section class="stats"><article><small>Academic level</small><strong id="level"></strong></article><article><small>Subjects</small><strong id="subject-count">0</strong></article><article><small>Weekly sessions</small><strong id="class-count">0</strong></article><article><small>Attendance</small><strong id="attendance-rate">—</strong></article></section>
         <section class="panel"><div class="panel-head"><div><h2>My weekly timetable</h2><p>Classes assigned by ShaSha administration.</p></div></div><div id="timetable" class="class-grid"></div></section>
+        <section class="panel"><div class="panel-head"><div><h2>Assignments</h2><p>Published work from your teachers.</p></div></div><div id="assignments" class="class-grid"></div></section>
+        <section class="panel"><div class="panel-head"><div><h2>Results and feedback</h2><p>Only published assessment results appear here.</p></div></div><div id="results" class="class-grid"></div></section>
+        <section class="panel"><div class="panel-head"><div><h2>Announcements</h2><p>Academy and class notices.</p></div></div><div id="announcements" class="class-grid"></div></section>
         <section class="panel"><div class="panel-head"><div><h2>My subjects</h2><p>Your approved subject selection.</p></div></div><div id="subjects" class="chips"></div></section>
       </section>
       <div id="page-message" class="notice hidden"></div>
