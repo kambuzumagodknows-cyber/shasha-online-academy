@@ -17,6 +17,7 @@ window.SHASHA_CONFIG = {
 };
 
 (() => {
+  if (!document.getElementById('enrol-form')) return;
   if (!document.querySelector('script[data-supabase-sdk]')) {
     const sdk = document.createElement('script');
     sdk.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
