@@ -15,3 +15,22 @@ window.SHASHA_CONFIG = {
   supabaseUrl: "https://wchctuyglpafeokvemzl.supabase.co",
   supabasePublishableKey: "sb_publishable_R-VlWyQNzLLwMKx9VFsk1Q_M0yxvK3I"
 };
+
+(() => {
+  if (!document.querySelector('script[data-supabase-sdk]')) {
+    const sdk = document.createElement('script');
+    sdk.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    sdk.dataset.supabaseSdk = 'true';
+    sdk.onload = () => {
+      window.shashaDb = window.supabase.createClient(
+        window.SHASHA_CONFIG.supabaseUrl,
+        window.SHASHA_CONFIG.supabasePublishableKey,
+        { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
+      );
+      const backend = document.createElement('script');
+      backend.src = 'backend.js';
+      document.head.appendChild(backend);
+    };
+    document.head.appendChild(sdk);
+  }
+})();
