@@ -1,7 +1,8 @@
-const CACHE = 'shasha-v6-pricing-fix-20260728';
+const CACHE = 'shasha-v7-live-student-20260728';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
-  './portal.css','./portal.js','./student.html','./teacher.html','./parent.html',
+  './portal.css','./portal.js','./teacher.html','./parent.html',
+  './student.html','./student-live.css','./student-app.js',
   './admin.html','./admin.css','./admin-app.js','./supabase-client.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
   './scheduling.html','./scheduling.css','./scheduling.js','./404.html',
