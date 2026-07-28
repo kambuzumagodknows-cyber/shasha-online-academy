@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v5-academic-catalogue-20260728';
+const CACHE = 'shasha-v6-pricing-fix-20260728';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './portal.css','./portal.js','./student.html','./teacher.html','./parent.html',
