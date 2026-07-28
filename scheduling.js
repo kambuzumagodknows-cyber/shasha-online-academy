@@ -3,13 +3,16 @@
   const db=window.shashaDb,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
   let profile=null,teachers=[],availability=[],classes=[],learners=[],subjects=[],levels=[],selectedTeacher=null,selectedLearner=null;
   const days=['','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-  const msg=(t,e=false)=>{const x=$('#page-message');x.textContent=t;x.classList.remove('hidden','error');if(e)x.classList.add('error');setTimeout(()=>x.classList.add('hidden'),4200)};
+  let messageTimer=null;
+  const msg=(t,e=false,timeout=8000)=>{const x=$('#page-message');clearTimeout(messageTimer);x.textContent=t;x.classList.remove('hidden','error');if(e)x.classList.add('error');if(timeout)messageTimer=setTimeout(()=>x.classList.add('hidden'),timeout)};
   const esc=(v='')=>String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const levelLabel=l=>`${l.curricula?.name||'Curriculum'} — ${l.name}`;
+  const teacherName=id=>teachers.find(t=>t.id===id)?.full_name||'Unassigned';
+  const subjectName=code=>subjects.find(s=>s.code===code)?.name||code;
 
   $$('[data-tab]').forEach(b=>b.onclick=()=>{$$('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));$$('[data-panel]').forEach(p=>p.classList.toggle('active',p.dataset.panel===b.dataset.tab))});
   $('#sign-out').onclick=async()=>{await db.auth.signOut();location.href='admin.html'};
-  $('#refresh-all').onclick=async()=>{await loadAll();msg('Subjects, levels, teachers and classes refreshed from the database.')};
+  $('#refresh-all').onclick=async()=>{const ok=await loadAll();if(ok)msg('Subjects, levels, teachers and classes refreshed from the database.')};
 
   async function boot(){
     const {data:{session}}=await db.auth.getSession();
@@ -26,13 +29,13 @@
       db.from('academic_levels').select('*,curricula(name,code)').eq('active',true).order('sort_order'),
       db.from('teachers').select('*').order('full_name'),
       db.from('teacher_availability').select('*').order('weekday').order('start_time'),
-      db.from('classes').select('*,teachers(full_name),subject_catalog(name)').order('weekday').order('start_time'),
+      db.from('classes').select('*').order('weekday').order('start_time'),
       db.from('learners').select('*').order('full_name')
     ]);
-    const err=[s,lv,t,a,c,l].find(x=>x.error)?.error;
-    if(err)return msg(err.message,true);
+    const failed=[s,lv,t,a,c,l].find(x=>x.error);
+    if(failed){msg(`Could not refresh the page: ${failed.error.message}`,true,0);return false}
     subjects=s.data||[];levels=lv.data||[];teachers=t.data||[];availability=a.data||[];classes=c.data||[];learners=l.data||[];
-    hydrate();renderAll();
+    hydrate();renderAll();return true;
   }
 
   function hydrate(){
@@ -46,7 +49,7 @@
   function renderAll(){renderTeachers();renderClasses();renderLearners();if(selectedTeacher)renderAvailability();if(selectedLearner)renderPlacement()}
   function renderTeachers(){
     $('#teacher-count').textContent=teachers.length;
-    $('#teacher-list').innerHTML=teachers.length?teachers.map(t=>`<article class="item"><div><strong>${esc(t.full_name)}</strong><small>${esc(t.email||t.phone||'No contact')} · ${(t.subjects||[]).map(code=>subjects.find(s=>s.code===code)?.name||code).join(', ')||'No subjects'}</small><small>${esc((t.academic_levels||[]).join(', ')||'No levels')}</small></div><div class="item-actions"><span class="pill ${esc(t.status)}">${esc(t.status)}</span><button class="secondary" data-availability="${t.id}">Availability</button></div></article>`).join(''):'<div class="empty">No teachers yet.</div>';
+    $('#teacher-list').innerHTML=teachers.length?teachers.map(t=>`<article class="item"><div><strong>${esc(t.full_name)}</strong><small>${esc(t.email||t.phone||'No contact')} · ${(t.subjects||[]).map(subjectName).join(', ')||'No subjects'}</small><small>${esc((t.academic_levels||[]).join(', ')||'No levels')}</small></div><div class="item-actions"><span class="pill ${esc(t.status)}">${esc(t.status)}</span><button class="secondary" data-availability="${t.id}">Availability</button></div></article>`).join(''):'<div class="empty">No teachers yet.</div>';
     $$('[data-availability]').forEach(b=>b.onclick=()=>{selectedTeacher=teachers.find(t=>t.id===b.dataset.availability);$('#availability-card').classList.remove('hidden');renderAvailability();$('#availability-card').scrollIntoView({behavior:'smooth'})});
   }
   function renderAvailability(){
@@ -54,22 +57,45 @@
     $('#availability-title').textContent=`${selectedTeacher.full_name} availability`;
     const rows=availability.filter(a=>a.teacher_id===selectedTeacher.id);
     $('#availability-list').innerHTML=rows.length?rows.map(a=>`<span class="slot">${days[a.weekday]} ${a.start_time.slice(0,5)}–${a.end_time.slice(0,5)} <button class="danger" data-delete-slot="${a.id}">×</button></span>`).join(''):'<span class="empty">No availability added.</span>';
-    $$('[data-delete-slot]').forEach(b=>b.onclick=async()=>{const {error}=await db.from('teacher_availability').delete().eq('id',b.dataset.deleteSlot);if(error)return msg(error.message,true);msg('Availability removed.');await loadAll()});
+    $$('[data-delete-slot]').forEach(b=>b.onclick=async()=>{const {error}=await db.from('teacher_availability').delete().eq('id',b.dataset.deleteSlot);if(error)return msg(error.message,true,0);msg('Availability removed.');await loadAll()});
   }
   $('#close-availability').onclick=()=>{$('#availability-card').classList.add('hidden');selectedTeacher=null};
   $('#teacher-form').onsubmit=async e=>{
-    e.preventDefault();const f=new FormData(e.currentTarget),payload={full_name:f.get('fullName').trim(),email:f.get('email').trim()||null,phone:f.get('phone').trim()||null,subjects:f.getAll('subjects'),academic_levels:f.getAll('levels'),status:f.get('status')};
-    if(!payload.subjects.length||!payload.academic_levels.length)return msg('Choose at least one subject and academic level.',true);
-    const {error}=await db.from('teachers').insert(payload);if(error)return msg(error.message,true);
-    e.currentTarget.reset();msg('Teacher saved. Add availability next.');await loadAll();
+    e.preventDefault();
+    const form=e.currentTarget,button=form.querySelector('button[type="submit"],button.primary'),original=button.textContent;
+    const f=new FormData(form),payload={
+      full_name:String(f.get('fullName')||'').trim(),
+      email:String(f.get('email')||'').trim().toLowerCase()||null,
+      phone:String(f.get('phone')||'').trim()||null,
+      subjects:f.getAll('subjects'),
+      academic_levels:f.getAll('levels'),
+      status:String(f.get('status')||'pending')
+    };
+    if(!payload.full_name)return msg('Enter the teacher’s full name.',true,0);
+    if(!payload.subjects.length||!payload.academic_levels.length)return msg('Choose at least one subject and academic level.',true,0);
+    button.disabled=true;button.textContent='Saving teacher…';
+    try{
+      const {data,error}=await db.from('teachers').insert(payload).select('*').single();
+      if(error){
+        if(error.code==='23505')throw new Error('A teacher with this email already exists. Edit the existing record instead of adding a duplicate.');
+        throw error;
+      }
+      teachers.push(data);teachers.sort((a,b)=>a.full_name.localeCompare(b.full_name));
+      hydrate();renderTeachers();form.reset();
+      msg(`Teacher “${data.full_name}” saved successfully. Add availability next.`,false,12000);
+      const refreshed=await loadAll();
+      if(!refreshed)msg(`Teacher “${data.full_name}” was saved, but the page could not refresh. Click Refresh; the teacher is safely in the database.`,true,0);
+    }catch(error){
+      msg(error.message||'Teacher could not be saved.',true,0);
+    }finally{button.disabled=false;button.textContent=original}
   };
-  $('#availability-form').onsubmit=async e=>{e.preventDefault();if(!selectedTeacher)return;const f=new FormData(e.currentTarget),payload={teacher_id:selectedTeacher.id,weekday:Number(f.get('weekday')),start_time:f.get('startTime'),end_time:f.get('endTime')};const {error}=await db.from('teacher_availability').insert(payload);if(error)return msg(error.message,true);msg('Availability added.');e.currentTarget.reset();await loadAll()};
+  $('#availability-form').onsubmit=async e=>{e.preventDefault();if(!selectedTeacher)return;const f=new FormData(e.currentTarget),payload={teacher_id:selectedTeacher.id,weekday:Number(f.get('weekday')),start_time:f.get('startTime'),end_time:f.get('endTime')};const {error}=await db.from('teacher_availability').insert(payload);if(error)return msg(error.message,true,0);msg('Availability added.');e.currentTarget.reset();await loadAll()};
 
   function renderClasses(){
     $('#class-count').textContent=classes.length;
-    $('#class-list').innerHTML=classes.length?classes.map(c=>`<article class="item"><div><strong>${esc(c.name)}</strong><small>${days[c.weekday]} ${c.start_time.slice(0,5)}–${c.end_time.slice(0,5)} · ${esc(c.subject_catalog?.name||c.subject_code)} · ${esc(c.academic_level)}</small><small>Teacher: ${esc(c.teachers?.full_name||'Unassigned')} · Capacity ${c.capacity}</small></div><div class="item-actions"><span class="pill ${c.published?'active':'pending'}">${c.published?'Published':'Draft'}</span></div></article>`).join(''):'<div class="empty">No class sessions yet.</div>';
+    $('#class-list').innerHTML=classes.length?classes.map(c=>`<article class="item"><div><strong>${esc(c.name)}</strong><small>${days[c.weekday]} ${c.start_time.slice(0,5)}–${c.end_time.slice(0,5)} · ${esc(subjectName(c.subject_code))} · ${esc(c.academic_level)}</small><small>Teacher: ${esc(teacherName(c.teacher_id))} · Capacity ${c.capacity}</small></div><div class="item-actions"><span class="pill ${c.published?'active':'pending'}">${c.published?'Published':'Draft'}</span></div></article>`).join(''):'<div class="empty">No class sessions yet.</div>';
   }
-  $('#class-form').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.currentTarget),args={p_name:f.get('name').trim(),p_subject_code:f.get('subject'),p_academic_level:f.get('level'),p_teacher_id:f.get('teacher'),p_weekday:Number(f.get('weekday')),p_start_time:f.get('startTime'),p_end_time:f.get('endTime'),p_capacity:Number(f.get('capacity')),p_meeting_url:f.get('meetingUrl').trim()||null,p_session_group:f.get('sessionGroup').trim()||null};const {error}=await db.rpc('create_class_session',args);if(error)return msg(error.message,true);msg('Class session created without conflicts.');e.currentTarget.reset();await loadAll()};
+  $('#class-form').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.currentTarget),args={p_name:String(f.get('name')||'').trim(),p_subject_code:f.get('subject'),p_academic_level:f.get('level'),p_teacher_id:f.get('teacher'),p_weekday:Number(f.get('weekday')),p_start_time:f.get('startTime'),p_end_time:f.get('endTime'),p_capacity:Number(f.get('capacity')),p_meeting_url:String(f.get('meetingUrl')||'').trim()||null,p_session_group:String(f.get('sessionGroup')||'').trim()||null};const {error}=await db.rpc('create_class_session',args);if(error)return msg(error.message,true,0);msg('Class session created without conflicts.');e.currentTarget.reset();await loadAll()};
 
   function renderLearners(){
     const q=($('#learner-search').value||'').toLowerCase();
@@ -83,8 +109,8 @@
     $('#placement-help').textContent=`Classes matching ${selectedLearner.full_name}'s level and subjects.`;
     const subjectCodes=subjects.filter(s=>(selectedLearner.subjects||[]).includes(s.name)).map(s=>s.code);
     const rows=classes.filter(c=>c.active&&c.academic_level===selectedLearner.academic_level&&subjectCodes.includes(c.subject_code));
-    $('#placement-classes').innerHTML=rows.length?rows.map(c=>`<article class="item"><div><strong>${esc(c.name)}</strong><small>${days[c.weekday]} ${c.start_time.slice(0,5)}–${c.end_time.slice(0,5)} · ${esc(c.subject_catalog?.name||c.subject_code)}</small><small>Teacher: ${esc(c.teachers?.full_name||'Unassigned')}</small></div><button class="primary" data-assign-class="${c.id}">Assign</button></article>`).join(''):'<div class="empty">No matching classes. Create sessions for this level and subject first.</div>';
-    $$('[data-assign-class]').forEach(b=>b.onclick=async()=>{const {error}=await db.rpc('assign_learner_to_class',{p_learner_id:selectedLearner.id,p_class_id:b.dataset.assignClass});if(error)return msg(error.message,true);msg(`${selectedLearner.full_name} assigned successfully.`)});
+    $('#placement-classes').innerHTML=rows.length?rows.map(c=>`<article class="item"><div><strong>${esc(c.name)}</strong><small>${days[c.weekday]} ${c.start_time.slice(0,5)}–${c.end_time.slice(0,5)} · ${esc(subjectName(c.subject_code))}</small><small>Teacher: ${esc(teacherName(c.teacher_id))}</small></div><button class="primary" data-assign-class="${c.id}">Assign</button></article>`).join(''):'<div class="empty">No matching classes. Create sessions for this level and subject first.</div>';
+    $$('[data-assign-class]').forEach(b=>b.onclick=async()=>{const {error}=await db.rpc('assign_learner_to_class',{p_learner_id:selectedLearner.id,p_class_id:b.dataset.assignClass});if(error)return msg(error.message,true,0);msg(`${selectedLearner.full_name} assigned successfully.`)});
   }
   boot();
 })();
