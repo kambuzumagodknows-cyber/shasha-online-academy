@@ -34,7 +34,9 @@
       const fd = new FormData(form);
       const subjects = fd.getAll('subjects');
       if (!subjects.length) throw new Error('Choose at least one subject.');
+      const referenceId = crypto.randomUUID();
       const payload = {
+        id: referenceId,
         guardian_name: String(fd.get('guardianName') || '').trim(),
         guardian_email: String(fd.get('guardianEmail') || '').trim().toLowerCase(),
         learner_name: String(fd.get('learnerName') || '').trim(),
@@ -50,7 +52,7 @@
       if (!payload.guardian_name || !payload.guardian_email || !payload.learner_name || !payload.phone || !payload.academic_level || !payload.learning_device || !payload.consent) {
         throw new Error('Complete all required fields before submitting.');
       }
-      const { data: saved, error } = await window.shashaDb.from('applications').insert(payload).select('id').single();
+      const { error } = await window.shashaDb.from('applications').insert(payload);
       if (error) throw error;
       const message = [
         'Hello ShaSha Online Academy,', '',
@@ -60,13 +62,12 @@
         `WhatsApp: ${payload.phone}`,
         `Level: ${payload.academic_level}`,
         `Subjects: ${subjects.join(', ')}`,
-        `Application reference: ${saved.id.slice(0, 8).toUpperCase()}`,
+        `Application reference: ${referenceId.slice(0, 8).toUpperCase()}`,
         '', 'Please confirm available timetable slots and next steps.'
       ].join('\n');
       form.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
       form.querySelector('.form-progress')?.setAttribute('hidden', '');
-      const success = document.getElementById('form-success');
-      success?.classList.add('active');
+      document.getElementById('form-success')?.classList.add('active');
       const summary = document.getElementById('enrol-summary');
       if (summary) summary.textContent = message;
       const numbers = window.SHASHA_CONFIG.whatsappNumbers || [];
