@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v15-admissions-submit-fix-20260729';
+const CACHE = 'shasha-v16-admissions-onboarding-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
