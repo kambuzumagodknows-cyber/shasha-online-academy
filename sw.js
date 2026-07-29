@@ -1,7 +1,7 @@
-const CACHE = 'shasha-v32-verifiable-certificates-20260729';
+const CACHE = 'shasha-v33-diagnostic-smart-placement-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
-  './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js',
+  './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js','./diagnostic.html','./diagnostic.css','./diagnostic.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./parent-pulse.css','./portal-extras.js',
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
