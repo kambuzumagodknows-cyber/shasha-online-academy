@@ -1,7 +1,7 @@
-const CACHE = 'shasha-v27-trial-payment-receipts-20260729';
+const CACHE = 'shasha-v28-enrollment-journey-tracker-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
-  './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js',
+  './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./parent-pulse.css','./portal-extras.js',
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
