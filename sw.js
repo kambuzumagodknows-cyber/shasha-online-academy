@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v16-admissions-onboarding-20260729';
+const CACHE = 'shasha-v17-learner-onboarding-board-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
@@ -6,7 +6,7 @@ const ASSETS = [
   './student.html','./student-live.css','./student-app.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
-  './admissions.html','./admissions.js',
+  './admissions.html','./admissions.js','./onboarding.html','./onboarding.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
   './scheduling.html','./scheduling.css','./scheduling.js',
   './operations.html','./operations.css','./operations.js','./operations-insights.js','./whatsapp-operations.js','./404.html',
