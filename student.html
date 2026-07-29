@@ -7,6 +7,7 @@
   <title>Student Portal | ShaSha Online Academy</title>
   <link rel="icon" href="assets/favicon.svg">
   <link rel="stylesheet" href="student-live.css">
+  <link rel="stylesheet" href="student-success.css">
 </head>
 <body>
   <section class="auth-shell" id="auth-view">
@@ -28,9 +29,31 @@
       <section id="claim-panel" class="claim hidden"><h2>Link your approved learner record</h2><p>Your account is signed in, but it has not yet been linked. The email must exactly match the learner email approved by the academy.</p><button id="claim-account">Link my learner record</button><div id="claim-message" class="notice hidden"></div></section>
       <section id="dashboard" class="hidden">
         <div class="hero"><div><span class="eyebrow" id="today"></span><h1>Welcome, <span id="learner-name"></span>.</h1><p id="learner-summary"></p></div><div class="hero-icon">🎓</div></div>
+
+        <section id="success-hub" class="success-hub" aria-label="Student Success Hub">
+          <div class="success-banner">
+            <div>
+              <span class="eyebrow">SHA SHA SUCCESS HUB</span>
+              <h2>Your week. Your mission. Your win.</h2>
+              <p id="success-message">Building your personalised learning plan…</p>
+            </div>
+            <div class="momentum-ring" id="momentum-ring"><strong id="momentum-score">0</strong><span>Momentum</span></div>
+          </div>
+          <div class="success-grid">
+            <article class="success-card mission-card"><small>TODAY'S MISSION</small><h3 id="today-mission">Loading…</h3><p id="today-mission-detail"></p><a id="today-mission-link" href="#assignments">Start now</a></article>
+            <article class="success-card"><small>WEEKLY PROGRESS</small><div class="progress-line"><span id="weekly-progress-bar"></span></div><strong id="weekly-progress-text">0% complete</strong><p id="weekly-progress-detail"></p></article>
+            <article class="success-card"><small>LEARNING STREAK</small><div class="streak-number">🔥 <strong id="streak-days">0</strong></div><p>active learning days this week</p></article>
+          </div>
+          <div class="success-columns">
+            <section class="success-panel"><div class="success-panel-head"><div><small>SMART PLAN</small><h3>Your next best moves</h3></div><button id="refresh-plan" type="button">Refresh plan</button></div><div id="study-plan" class="study-plan"></div></section>
+            <section class="success-panel"><div class="success-panel-head"><div><small>GOALS</small><h3>What are you chasing?</h3></div></div><form id="goal-form" class="goal-form"><input name="title" maxlength="120" placeholder="e.g. Score 80% in Mathematics" required><input name="targetDate" type="date"><button>Add goal</button></form><div id="goal-list" class="goal-list"></div></section>
+          </div>
+          <section class="success-panel"><div class="success-panel-head"><div><small>ACHIEVEMENTS</small><h3>Your ShaSha badge wall</h3></div></div><div id="achievement-wall" class="achievement-wall"></div></section>
+        </section>
+
         <section class="stats"><article><small>Academic level</small><strong id="level"></strong></article><article><small>Subjects</small><strong id="subject-count">0</strong></article><article><small>Weekly sessions</small><strong id="class-count">0</strong></article><article><small>Attendance</small><strong id="attendance-rate">—</strong></article></section>
         <section class="panel"><div class="panel-head"><div><h2>My weekly timetable</h2><p>Classes assigned by ShaSha administration.</p></div></div><div id="timetable" class="class-grid"></div></section>
-        <section class="panel"><div class="panel-head"><div><h2>Assignments</h2><p>Published work from your teachers.</p></div></div><div id="assignments" class="class-grid"></div></section>
+        <section class="panel" id="assignments-panel"><div class="panel-head"><div><h2>Assignments</h2><p>Published work from your teachers.</p></div></div><div id="assignments" class="class-grid"></div></section>
         <section class="panel"><div class="panel-head"><div><h2>Results and feedback</h2><p>Only published assessment results appear here.</p></div></div><div id="results" class="class-grid"></div></section>
         <section class="panel"><div class="panel-head"><div><h2>Announcements</h2><p>Academy and class notices.</p></div></div><div id="announcements" class="class-grid"></div></section>
         <section class="panel"><div class="panel-head"><div><h2>My subjects</h2><p>Your approved subject selection.</p></div></div><div id="subjects" class="chips"></div></section>
@@ -43,6 +66,7 @@
   <script src="config.js"></script>
   <script src="supabase-client.js"></script>
   <script src="student-app.js"></script>
+  <script src="student-success.js"></script>
   <script src="portal-extras.js"></script>
 </body>
 </html>
