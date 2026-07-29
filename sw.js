@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v31-smart-notification-centre-20260729';
+const CACHE = 'shasha-v32-verifiable-certificates-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js',
@@ -6,7 +6,7 @@ const ASSETS = [
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
   './classroom.html','./classroom.css','./classroom.js','./passport.html','./passport.css','./passport.js',
-  './notifications.html','./notifications.css','./notifications.js',
+  './notifications.html','./notifications.css','./notifications.js','./certificates.html','./certificates.css','./certificates.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
   './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js','./enrollment-engine.html','./enrollment-engine.css','./enrollment-engine.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
