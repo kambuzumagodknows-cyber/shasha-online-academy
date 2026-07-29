@@ -1,12 +1,12 @@
-const CACHE = 'shasha-v26-teacher-command-studio-20260729';
+const CACHE = 'shasha-v27-trial-payment-receipts-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
-  './join.html','./join.css','./join.js',
+  './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./parent-pulse.css','./portal-extras.js',
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
-  './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js',
+  './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js','./enrollment-engine.html','./enrollment-engine.css','./enrollment-engine.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
   './scheduling.html','./scheduling.css','./scheduling.js','./availability.html','./availability.js','./class-launch.html','./class-launch.js',
   './operations.html','./operations.css','./operations.js','./operations-insights.js','./whatsapp-operations.js','./404.html',
