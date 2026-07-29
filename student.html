@@ -15,10 +15,10 @@
       <a class="brand" href="index.html"><img src="assets/logo-mark.svg" alt=""><span><strong>ShaSha</strong> Online Academy</span></a>
       <span class="eyebrow">STUDENT PORTAL</span>
       <h1>Your learning, in one place.</h1>
-      <p>Use the learner email approved by ShaSha administration.</p>
+      <p>Use the exact learner email approved by ShaSha administration. Approved learner emails activate immediately.</p>
       <div class="tabs"><button class="active" data-auth-tab="login">Sign in</button><button data-auth-tab="signup">Create account</button></div>
       <form id="login-form" class="auth-form"><label>Email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button>Sign in</button></form>
-      <form id="signup-form" class="auth-form hidden"><label>Full name<input name="fullName" required></label><label>Approved learner email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button>Create student account</button><small>You may need to confirm your email before signing in.</small></form>
+      <form id="signup-form" class="auth-form hidden"><label>Full name<input name="fullName" required></label><label>Approved learner email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button>Create student account</button><small>No confirmation email is required when the email matches an approved learner record.</small></form>
       <div id="auth-message" class="notice hidden"></div>
     </div>
   </section>
@@ -66,6 +66,7 @@
   <script src="config.js"></script>
   <script src="supabase-client.js"></script>
   <script src="student-app.js"></script>
+  <script src="student-auth-fix.js"></script>
   <script src="student-success.js"></script>
   <script src="portal-extras.js"></script>
 </body>
