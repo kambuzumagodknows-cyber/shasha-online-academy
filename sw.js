@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v17-learner-onboarding-board-20260729';
+const CACHE = 'shasha-v18-class-launch-centre-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
@@ -8,7 +8,7 @@ const ASSETS = [
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
   './admissions.html','./admissions.js','./onboarding.html','./onboarding.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
-  './scheduling.html','./scheduling.css','./scheduling.js',
+  './scheduling.html','./scheduling.css','./scheduling.js','./class-launch.html','./class-launch.js',
   './operations.html','./operations.css','./operations.js','./operations-insights.js','./whatsapp-operations.js','./404.html',
   './assets/logo-mark.svg','./assets/favicon.svg','./assets/hero-learning.webp',
   './assets/student-dashboard.webp','./assets/teacher-dashboard.webp','./assets/social-preview.jpg'
