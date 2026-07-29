@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v33-diagnostic-smart-placement-20260729';
+const CACHE = 'shasha-v34-demand-to-class-autopilot-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js','./diagnostic.html','./diagnostic.css','./diagnostic.js',
@@ -7,7 +7,7 @@ const ASSETS = [
   './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
   './classroom.html','./classroom.css','./classroom.js','./passport.html','./passport.css','./passport.js',
   './notifications.html','./notifications.css','./notifications.js','./certificates.html','./certificates.css','./certificates.js',
-  './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
+  './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js','./class-autopilot.html','./class-autopilot.css','./class-autopilot.js',
   './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js','./enrollment-engine.html','./enrollment-engine.css','./enrollment-engine.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
   './scheduling.html','./scheduling.css','./scheduling.js','./availability.html','./availability.js','./class-launch.html','./class-launch.js',
