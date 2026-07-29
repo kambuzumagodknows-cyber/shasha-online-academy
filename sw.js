@@ -1,4 +1,4 @@
-const CACHE = 'shasha-v20-desktop-admin-menu-20260729';
+const CACHE = 'shasha-v21-availability-conflict-details-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
