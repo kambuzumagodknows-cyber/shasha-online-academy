@@ -1,10 +1,10 @@
-const CACHE = 'shasha-v25-approved-learner-auth-20260729';
+const CACHE = 'shasha-v26-teacher-command-studio-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./parent-pulse.css','./portal-extras.js',
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
-  './teacher.html','./teacher-app.js','./teacher-marking.js',
+  './teacher.html','./teacher-app.js','./teacher-marking.js','./teacher-command.css','./teacher-command.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
   './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js',
   './academic-settings.html','./academic-settings.css','./academic-settings.js',
