@@ -1,9 +1,9 @@
-const CACHE = 'shasha-v22-intelligence-command-centre-20260729';
+const CACHE = 'shasha-v23-student-success-hub-20260729';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js','./backend.js',
   './join.html','./join.css','./join.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./portal-extras.js',
-  './student.html','./student-live.css','./student-app.js',
+  './student.html','./student-live.css','./student-app.js','./student-success.css','./student-success.js',
   './teacher.html','./teacher-app.js','./teacher-marking.js',
   './admin.html','./admin.css','./admin-app.js','./admin-nav.css','./admin-nav.js','./supabase-client.js',
   './intelligence.html','./intelligence.js','./admissions.html','./admissions.js','./onboarding.html','./onboarding.js',
