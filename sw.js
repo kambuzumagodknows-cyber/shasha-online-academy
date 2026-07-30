@@ -1,6 +1,6 @@
-const CACHE = 'shasha-v37-resilient-local-pdf-downloads-20260730';
+const CACHE = 'shasha-v38-pdf-download-repair-20260730';
 const ASSETS = [
-  './','./index.html','./styles.css','./app.js','./config.js','./backend.js','./pdf-engine.js',
+  './','./index.html','./styles.css','./app.js','./config.js','./backend.js','./pdf-engine.js','./receipt-recovery.js',
   './join.html','./join.css','./join.js','./trial-enrollment.css','./trial-enrollment.js','./status.html','./status.css','./status.js','./diagnostic.html','./diagnostic.css','./diagnostic.js',
   './portal.css','./portal.js','./parent.html','./parent-app.js','./parent-pulse.css','./portal-extras.js',
   './student.html','./student-live.css','./student-app.js','./student-auth-fix.js','./student-success.css','./student-success.js',
